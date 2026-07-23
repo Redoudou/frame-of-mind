@@ -204,6 +204,36 @@ export default function App() {
             …or try it with a demo photo
           </button>
           {loadError && <div className="load-error">{loadError}</div>}
+
+          <div className="how-it-works">
+            <p className="how-intro">
+              Picked a photo to hang on the wall? This app answers the two questions that come next —
+              <em> which standard frame and mat will make it look best</em>, and
+              <em> exactly what to tell the print shop</em> — so the print comes back the right size,
+              the right crop, and sharp.
+            </p>
+            <ol className="how-steps">
+              <li>
+                <strong>Drop in one photo</strong>
+                JPEG, PNG, WebP or iPhone HEIC. It stays on your computer — nothing is uploaded.
+              </li>
+              <li>
+                <strong>Compare frames</strong>
+                Get a recommended frame + mat combination and two alternatives, scored on cropping,
+                print sharpness (DPI) and mat balance — or enter the size of a frame you already own.
+              </li>
+              <li>
+                <strong>Position the photo</strong>
+                Drag and zoom behind the mat until the crop looks right. Pick a white, cream or black mat.
+              </li>
+              <li>
+                <strong>Hand off the print order</strong>
+                Copy or print a pixel-exact instruction sheet — print size, paper size, DPI and the
+                precise crop window — that any print shop can follow without guessing.
+              </li>
+            </ol>
+          </div>
+
           <RecentPhotos onOpen={onOpenRecent} />
         </main>
       ) : (

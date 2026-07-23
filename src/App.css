@@ -568,6 +568,76 @@ h3 {
   margin: 0;
 }
 
+/* ---------- how it works ---------- */
+
+.how-it-works {
+  width: min(720px, 100%);
+  margin-top: 36px;
+}
+
+.how-intro {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 0 18px;
+}
+
+.how-intro em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.how-steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 700px) {
+  .how-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+.how-steps li {
+  counter-increment: step;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px 14px 46px;
+  position: relative;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.how-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+}
+
+.how-steps li strong {
+  display: block;
+  color: var(--ink);
+  font-size: 13.5px;
+  margin-bottom: 3px;
+}
+
 /* ---------- recent photos ---------- */
 
 .recent-photos {
