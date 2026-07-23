@@ -149,7 +149,7 @@
 
 @media (max-width: 980px) {
   .app-main {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -787,6 +787,87 @@ h3 {
   color: var(--ink-soft);
   margin-top: 5px;
   text-align: center;
+}
+
+/* ---------- phone layout ---------- */
+
+@media (max-width: 640px) {
+  .app {
+    padding: 12px 12px 32px;
+  }
+
+  .app-header h1 {
+    font-size: 21px;
+  }
+
+  .app-header p {
+    font-size: 13px;
+  }
+
+  .zone-photo,
+  .zone-side {
+    padding: 12px;
+  }
+
+  .dropzone {
+    padding: 36px 20px;
+  }
+
+  .editor-canvas {
+    height: min(62vh, 440px);
+  }
+
+  .editor-controls {
+    gap: 10px;
+  }
+
+  .zoom-control input[type="range"] {
+    width: 110px;
+  }
+
+  .hint {
+    display: none;
+  }
+
+  .preset-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .custom-frame-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .side-previews {
+    gap: 8px;
+  }
+
+  .frame-preview-canvas,
+  .crop-preview-canvas {
+    height: 150px;
+  }
+
+  .sheet-overlay {
+    padding: 12px 6px;
+  }
+
+  .sheet-page {
+    padding: 16px 14px 24px;
+    border-radius: 10px;
+  }
+
+  .sheet-text {
+    font-size: 11px;
+    padding: 12px;
+  }
+
+  .sheet-attachments {
+    grid-template-columns: 1fr;
+  }
+
+  .sheet-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
 }
 
 /* ---------- print ---------- */
