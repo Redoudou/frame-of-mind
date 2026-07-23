@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type {
   FramePreset,
   MatColor,
@@ -8,7 +8,7 @@ import type {
 } from "./types";
 import { DEFAULT_PRESETS, loadCustomPresets, saveCustomPresets } from "./presets";
 import { buildPrintOrder, computeCropWindow, orientPreset, printOrderText, recommend } from "./logic";
-import { loadPhoto, photoFromBlob } from "./loadPhoto";
+import { FILE_ACCEPT, loadPhoto, photoFromBlob } from "./loadPhoto";
 import { recentId, saveRecent, type RecentEntry } from "./recent";
 import { renderThumbDataUrl } from "./render";
 import { generateDemoPhoto } from "./demo";
@@ -53,6 +53,20 @@ export default function App() {
   const [transform, setTransform] = useState<Transform>(IDENTITY);
   const [showSheet, setShowSheet] = useState(false);
   const [inlineCopied, setInlineCopied] = useState(false);
+  const headerFileRef = useRef<HTMLInputElement>(null);
+
+  // Back to the start screen (drop zone + recents). Also strips ?demo from the
+  // URL so a refresh doesn't re-enter the demo.
+  const goHome = useCallback(() => {
+    setPhoto(null);
+    setSelectedId(null);
+    setTransform(IDENTITY);
+    setShowSheet(false);
+    setLoadError(null);
+    if (window.location.search) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
 
   const recommendations = useMemo(
     () => (photo ? recommend(photo.analysis, presets, orientationSetting) : []),
@@ -193,8 +207,35 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header no-print">
-        <h1>Photo Frame Planner</h1>
-        <p>Pick the frame, position the photo, get a pixel-exact print order for your print shop.</p>
+        <div className="header-row">
+          <h1 className="brand" onClick={goHome} title="Back to the start page" role="link" tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && goHome()}>
+            Photo Frame Planner
+          </h1>
+          {photo && (
+            <nav className="header-nav">
+              <button className="btn" onClick={() => headerFileRef.current?.click()}>
+                Open another photo…
+              </button>
+              <button className="btn" onClick={goHome}>⌂ Home</button>
+              <input
+                ref={headerFileRef}
+                type="file"
+                accept={FILE_ACCEPT}
+                hidden
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) onFile(f);
+                  e.target.value = "";
+                }}
+              />
+            </nav>
+          )}
+        </div>
+        <p>
+          Free, private, in-browser: drop in a photo, get the best frame + mat match and a
+          pixel-exact print order for your print shop.
+        </p>
       </header>
 
       {!photo ? (

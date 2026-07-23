@@ -13,6 +13,9 @@ function isHeic(file: File): boolean {
 
 const SUPPORTED = /\.(jpe?g|png|webp|heic|heif)$/i;
 
+export const FILE_ACCEPT =
+  ".jpg,.jpeg,.png,.webp,.heic,.heif,image/jpeg,image/png,image/webp,image/heic,image/heif";
+
 export function isSupportedFile(file: File): boolean {
   return SUPPORTED.test(file.name) || /^image\/(jpeg|png|webp|heic|heif)$/.test(file.type);
 }

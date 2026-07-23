@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { isSupportedFile } from "../loadPhoto";
+import { FILE_ACCEPT, isSupportedFile } from "../loadPhoto";
 
 type Props = {
   onFile: (file: File) => void;
@@ -43,7 +43,7 @@ export function DropZone({ onFile, compact, status }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept=".jpg,.jpeg,.png,.webp,.heic,.heif,image/jpeg,image/png,image/webp,image/heic,image/heif"
+        accept={FILE_ACCEPT}
         hidden
         onChange={(e) => {
           handle(e.target.files?.[0]);
