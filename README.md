@@ -8,10 +8,10 @@ photo never leaves your machine.
 
 ## Demo
 
-- **[Live demo](https://redoudou.github.io/photoformat/?demo)** — opens the
+- **[Live demo](https://redoudou.github.io/frame-of-mind/?demo)** — opens the
   app with a generated sample photo (a 4032 × 3024 dusk lake scene, drawn on
   a canvas at load time, so the DPI and crop numbers are realistic).
-- **[Straight to the print order](https://redoudou.github.io/photoformat/?demo=order)**
+- **[Straight to the print order](https://redoudou.github.io/frame-of-mind/?demo=order)**
   — same, but lands on the finished instruction sheet.
 - The home page also has an "…or try it with a demo photo" link.
 
@@ -41,9 +41,9 @@ Other scripts: `npm run build` (typecheck + production build to `dist/`),
 Pushing to `main` triggers a GitHub Actions workflow
 ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) that builds
 the app and publishes it to GitHub Pages at
-**https://redoudou.github.io/photoformat/**. The repo stays private (Pages on
+**https://redoudou.github.io/frame-of-mind/**. The repo stays private (Pages on
 a private repo requires GitHub Pro); note the site URL itself is publicly
-accessible. Production builds use the `/photoformat/` base path — set in
+accessible. Production builds use the `/frame-of-mind/` base path — set in
 [vite.config.ts](vite.config.ts).
 
 ## The deliverable
