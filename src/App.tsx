@@ -210,7 +210,7 @@ export default function App() {
         <div className="header-row">
           <h1 className="brand" onClick={goHome} title="Back to the start page" role="link" tabIndex={0}
             onKeyDown={(e) => e.key === "Enter" && goHome()}>
-            Photo Frame Planner
+            Frame of Mind
           </h1>
           {photo && (
             <nav className="header-nav">

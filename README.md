@@ -1,4 +1,4 @@
-# Photo Frame Planner
+# Frame of Mind
 
 A local web app that takes one photo and produces one deliverable: a precise,
 unambiguous **printer instruction sheet** you send to your print shop.
