@@ -18,6 +18,16 @@ npm run dev      # http://localhost:5173
 Other scripts: `npm run build` (typecheck + production build to `dist/`),
 `npm run preview` (serve the production build), `npm run lint`.
 
+## Deployment
+
+Pushing to `main` triggers a GitHub Actions workflow
+([.github/workflows/deploy.yml](.github/workflows/deploy.yml)) that builds
+the app and publishes it to GitHub Pages at
+**https://redoudou.github.io/photoformat/**. The repo stays private (Pages on
+a private repo requires GitHub Pro); note the site URL itself is publicly
+accessible. Production builds use the `/photoformat/` base path — set in
+[vite.config.ts](vite.config.ts).
+
 ## The deliverable
 
 The instruction sheet is copyable as plain text, printable as a browser page,
