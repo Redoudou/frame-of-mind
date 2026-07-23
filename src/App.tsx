@@ -11,6 +11,7 @@ import { buildPrintOrder, computeCropWindow, orientPreset, printOrderText, recom
 import { loadPhoto, photoFromBlob } from "./loadPhoto";
 import { recentId, saveRecent, type RecentEntry } from "./recent";
 import { renderThumbDataUrl } from "./render";
+import { generateDemoPhoto } from "./demo";
 import { CustomFrameCard } from "./components/CustomFrameCard";
 import { DropZone } from "./components/DropZone";
 import { EditorCanvas } from "./components/EditorCanvas";
@@ -113,6 +114,30 @@ export default function App() {
     [adoptPhoto],
   );
 
+  const onDemo = useCallback(async () => {
+    setLoadError(null);
+    setStatus("Creating demo photo…");
+    try {
+      adoptPhoto(await generateDemoPhoto());
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setStatus(null);
+    }
+  }, [adoptPhoto]);
+
+  // ?demo loads the app pre-filled with the generated sample photo;
+  // ?demo=order additionally opens the resulting print-order sheet.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("demo")) {
+      onDemo().then(() => {
+        if (params.get("demo") === "order") setShowSheet(true);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount only
+  }, []);
+
   const onOpenRecent = useCallback(
     async (entry: RecentEntry) => {
       setLoadError(null);
@@ -175,6 +200,9 @@ export default function App() {
       {!photo ? (
         <main className="app-empty no-print">
           <DropZone onFile={onFile} status={status} />
+          <button className="demo-link" onClick={onDemo}>
+            …or try it with a demo photo
+          </button>
           {loadError && <div className="load-error">{loadError}</div>}
           <RecentPhotos onOpen={onOpenRecent} />
         </main>

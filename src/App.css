@@ -96,6 +96,20 @@
   }
 }
 
+.demo-link {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 14px;
+  margin-top: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.demo-link:hover {
+  color: #8a3f14;
+}
+
 .dropzone-error,
 .load-error {
   color: var(--bad);

@@ -6,6 +6,24 @@ unambiguous **printer instruction sheet** you send to your print shop.
 Everything runs in the browser. No backend, no accounts, no uploads — the
 photo never leaves your machine.
 
+## Demo
+
+- **[Live demo](https://redoudou.github.io/photoformat/?demo)** — opens the
+  app with a generated sample photo (a 4032 × 3024 dusk lake scene, drawn on
+  a canvas at load time, so the DPI and crop numbers are realistic).
+- **[Straight to the print order](https://redoudou.github.io/photoformat/?demo=order)**
+  — same, but lands on the finished instruction sheet.
+- The home page also has an "…or try it with a demo photo" link.
+
+The main screen — interactive photo-behind-mat editor on the left,
+recommendations and the "Have a frame already?" flow on the right:
+
+![Main screen with the demo photo](docs/screenshot-main.png)
+
+The deliverable — pixel-exact instruction sheet with attachments:
+
+![Generated print order](docs/screenshot-order.png)
+
 ## Run
 
 Requires Node 20+.
