@@ -177,3 +177,7 @@ src/
 
 Stack: React 19 + Vite + TypeScript, HTML Canvas for all rendering,
 `heic2any` (code-split) for HEIC. No other runtime dependencies.
+
+## License
+
+[MIT](LICENSE)
