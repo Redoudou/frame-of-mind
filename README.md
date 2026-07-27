@@ -10,7 +10,7 @@ photo never leaves your machine.
 
 - **[Live demo](https://redoudou.github.io/frame-of-mind/?demo)** — opens the
   app with a generated sample photo (a 4032 × 3024 dusk lake scene, drawn on
-  a canvas at load time, so the DPI and crop numbers are realistic).
+  a canvas at load time, so the PPI and crop numbers are realistic).
 - **[Straight to the print order](https://redoudou.github.io/frame-of-mind/?demo=order)**
   — same, but lands on the finished instruction sheet.
 - The home page also has an "…or try it with a demo photo" link.
@@ -58,7 +58,7 @@ PRINT ORDER — IMG_2041.jpg
 PRINT
   Image size:     11.5 × 14.5 in (29.2 × 36.8 cm), portrait
   Paper size:     16 × 20 in, image centered, margins white
-  Resolution:     415 DPI at print size (4771 × 6016 px source area)
+  Resolution:     415 PPI at print size (4771 × 6016 px source area)
 
 CROP
   Source file:    6016 × 6016 px
@@ -70,7 +70,7 @@ FRAMING (for reference, not for the printer)
   Frame:          16 × 20 in
   Mat opening:    11 × 14 in, white
   Visible area:   10.75 × 13.75 in after mat overlap
-  Print bleed:    print is 0.25 in larger than the mat opening on each side
+  Print bleed:    print is 0.25 in (6.4 mm) larger than the mat opening on each side
 ```
 
 The sheet is always visible live in the side panel ("Message for the print
@@ -87,9 +87,9 @@ the crop window drawn on the original.
 2. **Review recommendations.** The app scores every preset and shows one
    primary pick plus two alternatives (chosen for diversity: least cropping,
    biggest visual impact). Each card states frame, mat opening, print size,
-   orientation, crop %, DPI rating, and a one-sentence rationale.
+   orientation, crop %, PPI rating, and a one-sentence rationale.
 3. **Or use a frame you already own.** Under "Have a frame already?", enter
-   the frame size and mat opening — the best print spec (print size, DPI,
+   the frame size and mat opening — the best print spec (print size, PPI,
    crop %, visible area) updates live; "Use this frame" feeds it into the
    same editor and print-order flow.
 4. **Position the photo.** Drag to reposition, scroll or use the slider to
@@ -108,10 +108,10 @@ Weighted score per preset:
 | Weight | Factor |
 |-------:|--------|
 | 50% | Minimal cropping (aspect-ratio fit) |
-| 30% | Print quality — effective DPI |
+| 30% | Print quality — effective PPI |
 | 20% | Mat proportion (1–2 in borders around small prints, 2–3 in around large) |
 
-DPI ratings: **Excellent** ≥ 300 · **Very good** 240–299 · **Good** 180–239 ·
+PPI ratings: **Excellent** ≥ 300 · **Very good** 240–299 · **Good** 180–239 ·
 **Low** < 180. A Low option is never recommended as primary, and the UI warns
 before you print one. The app never claims one frame is objectively correct —
 every choice can be overridden visually.
@@ -129,10 +129,12 @@ Five values are always kept separate:
 Example: 11×14 frame, 8×10 mat opening, 8×10 print on an 11×14 sheet,
 7.75×9.75 visible.
 
-**Print bleed:** in the "Have a frame already?" flow you can make the print
-+¼ or +½ in per side larger than the mat opening, so slight mat misalignment
-shows extra image instead of white paper. The sheet states the bleed
-explicitly and the DPI/crop numbers account for it.
+**Print bleed:** in the "Have a frame already?" flow the print is made larger
+than the mat opening so slight mat misalignment shows extra image instead of
+white paper. The print-shop standard of **⅛ in (3.2 mm) per side** is the
+default; +¼ in, +½ in, or no bleed are selectable, with every option labeled
+in both inches and millimeters. The sheet states the bleed explicitly and the
+PPI/crop numbers account for it.
 
 ## Presets and persistence
 
@@ -155,7 +157,7 @@ Clearing the browser's site data removes both.
 
 ```
 src/
-  logic.ts        All math: analysis, crop windows, DPI, scoring,
+  logic.ts        All math: analysis, crop windows, PPI, scoring,
                   recommendations, print-order text. Pure functions.
   render.ts       Canvas drawing: framed render (editor + realistic modes),
                   crop preview, sheet attachments.

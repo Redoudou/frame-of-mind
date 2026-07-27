@@ -38,7 +38,7 @@ export type QualityLabel = "excellent" | "very-good" | "good" | "low";
 
 export type Recommendation = {
   framePresetId: string;
-  effectiveDpi: number;
+  effectivePpi: number;
   cropPercent: number;
   cropWindow: CropWindow; // pixel-exact, feeds the instruction sheet
   fitScore: number;
@@ -75,7 +75,7 @@ export type PrintOrder = {
   paperWidthIn: number;
   paperHeightIn: number;
   orientation: "portrait" | "landscape";
-  dpiAtPrintSize: number;
+  ppiAtPrintSize: number;
   cropWindow: CropWindow;
   matColor: MatColor;
   visibleWidthIn: number; // after mat overlap

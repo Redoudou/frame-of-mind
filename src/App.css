@@ -363,7 +363,7 @@ h3 {
   color: var(--accent);
 }
 
-.dpi-chip {
+.ppi-chip {
   font-size: 11px;
   padding: 2px 8px;
   border-radius: 999px;
@@ -371,22 +371,22 @@ h3 {
   font-variant-numeric: tabular-nums;
 }
 
-.dpi-excellent {
+.ppi-excellent {
   background: #e3f1e6;
   color: var(--good);
 }
 
-.dpi-very-good {
+.ppi-very-good {
   background: #e8efe3;
   color: #4e7d2e;
 }
 
-.dpi-good {
+.ppi-good {
   background: #f3ecd9;
   color: #8a6d1a;
 }
 
-.dpi-low {
+.ppi-low {
   background: #f7e2e0;
   color: var(--bad);
 }

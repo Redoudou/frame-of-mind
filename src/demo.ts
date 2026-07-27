@@ -3,7 +3,7 @@ import type { Photo } from "./types";
 
 /**
  * Generates the demo photo entirely in the browser: a 4032 × 3024 dusk
- * lake scene (typical iPhone resolution, so DPI and crop numbers look real).
+ * lake scene (typical iPhone resolution, so PPI and crop numbers look real).
  * No image asset is shipped and nothing is downloaded.
  */
 export async function generateDemoPhoto(): Promise<Photo> {

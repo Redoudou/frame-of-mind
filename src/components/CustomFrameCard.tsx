@@ -11,17 +11,23 @@ type Props = {
 };
 
 /** Per-side print bleed options, in the preset's unit. */
+/** Standard print-shop bleed: 1/8 in per side (≈3 mm for cm presets). */
+export const STANDARD_BLEED: Record<"in" | "cm", number> = { in: 0.125, cm: 0.3 };
+
 function bleedOptions(unit: "in" | "cm"): { value: number; label: string }[] {
+  // Labels show both inches and millimeters — print shops use either.
   return unit === "in"
     ? [
-        { value: 0, label: "Same as opening (standard)" },
-        { value: 0.25, label: "+¼ in per side" },
-        { value: 0.5, label: "+½ in per side" },
+        { value: 0, label: "Same as opening — no bleed" },
+        { value: 0.125, label: "+⅛ in (3.2 mm) per side — standard" },
+        { value: 0.25, label: "+¼ in (6.4 mm) per side" },
+        { value: 0.5, label: "+½ in (12.7 mm) per side" },
       ]
     : [
-        { value: 0, label: "Same as opening (standard)" },
-        { value: 0.5, label: "+0.5 cm per side" },
-        { value: 1, label: "+1 cm per side" },
+        { value: 0, label: "Same as opening — no bleed" },
+        { value: 0.3, label: "+3 mm (≈⅛ in) per side — standard" },
+        { value: 0.5, label: "+5 mm (≈0.2 in) per side" },
+        { value: 1, label: "+10 mm (≈0.4 in) per side" },
       ];
 }
 
@@ -85,7 +91,13 @@ export function CustomFrameCard({ photo, frame, orientationSetting, active, onCh
         </label>
         <label className="preset-field">
           <span>Unit</span>
-          <select value={frame.unit} onChange={(e) => set({ unit: e.target.value as Unit }, 0)}>
+          <select
+            value={frame.unit}
+            onChange={(e) => {
+              const unit = e.target.value as Unit;
+              set({ unit }, STANDARD_BLEED[unit]);
+            }}
+          >
             <option value="in">inches</option>
             <option value="cm">cm</option>
           </select>
@@ -119,8 +131,8 @@ export function CustomFrameCard({ photo, frame, orientationSetting, active, onCh
                 <span className="rec-rank">
                   Best spec — {d(spec.frameW)} × {d(spec.frameH)} {frame.unit}, {spec.orientation}
                 </span>
-                <span className={`dpi-chip dpi-${rec.qualityLabel}`}>
-                  {rec.effectiveDpi} DPI · {QUALITY_TEXT[rec.qualityLabel]}
+                <span className={`ppi-chip ppi-${rec.qualityLabel}`}>
+                  {rec.effectivePpi} PPI · {QUALITY_TEXT[rec.qualityLabel]}
                 </span>
               </div>
               <div className="rec-meta">
@@ -130,7 +142,7 @@ export function CustomFrameCard({ photo, frame, orientationSetting, active, onCh
               </div>
               {rec.qualityLabel === "low" && (
                 <div className="rec-warning">
-                  ⚠ Below 180 DPI — this photo is too small for that opening; the print may look soft.
+                  ⚠ Below 180 PPI — this photo is too small for that opening; the print may look soft.
                 </div>
               )}
             </div>

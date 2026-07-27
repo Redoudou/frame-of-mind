@@ -89,14 +89,14 @@ export function cropPercentOf(crop: CropWindow, srcW: number, srcH: number): num
   return (1 - area / (srcW * srcH)) * 100;
 }
 
-export function effectiveDpi(crop: CropWindow, printWIn: number): number {
+export function effectivePpi(crop: CropWindow, printWIn: number): number {
   return Math.round((crop.xEnd - crop.xStart) / printWIn);
 }
 
-export function qualityLabel(dpi: number): QualityLabel {
-  if (dpi >= 300) return "excellent";
-  if (dpi >= 240) return "very-good";
-  if (dpi >= 180) return "good";
+export function qualityLabel(ppi: number): QualityLabel {
+  if (ppi >= 300) return "excellent";
+  if (ppi >= 240) return "very-good";
+  if (ppi >= 180) return "good";
   return "low";
 }
 
@@ -107,8 +107,8 @@ export const QUALITY_TEXT: Record<QualityLabel, string> = {
   low: "Low",
 };
 
-function dpiScore(dpi: number): number {
-  return clamp(dpi / 300, 0, 1);
+function ppiScore(ppi: number): number {
+  return clamp(ppi / 300, 0, 1);
 }
 
 function matScore(spec: OrientedSpec): number {
@@ -126,7 +126,7 @@ function matBorderIn(spec: OrientedSpec): number {
   return ((spec.frameW - spec.openW) / 2 + (spec.frameH - spec.openH) / 2) / 2;
 }
 
-function explanationFor(spec: OrientedSpec, cropPct: number, dpi: number): string {
+function explanationFor(spec: OrientedSpec, cropPct: number, ppi: number): string {
   const cropText =
     cropPct < 1
       ? "keeps virtually the whole photo"
@@ -136,7 +136,7 @@ function explanationFor(spec: OrientedSpec, cropPct: number, dpi: number): strin
   const border = matBorderIn(spec);
   const matText =
     border < 1 ? "a slim mat border" : border <= 2 ? "a balanced mat border" : "a wide gallery-style mat";
-  return `This ${fmtIn(spec.frameW)} × ${fmtIn(spec.frameH)} frame ${cropText}, prints at ${dpi} DPI (${QUALITY_TEXT[qualityLabel(dpi)].toLowerCase()}), and gives ${matText} of ${fmtIn(border)} in.`;
+  return `This ${fmtIn(spec.frameW)} × ${fmtIn(spec.frameH)} frame ${cropText}, prints at ${ppi} PPI (${QUALITY_TEXT[qualityLabel(ppi)].toLowerCase()}), and gives ${matText} of ${fmtIn(border)} in.`;
 }
 
 export function fmtIn(v: number): string {
@@ -147,23 +147,23 @@ export function fmtIn(v: number): string {
 export function scoreRecommendation(photo: PhotoAnalysis, spec: OrientedSpec): Recommendation {
   const crop = computeCropWindow(photo.pixelWidth, photo.pixelHeight, spec.printW, spec.printH);
   const cropPct = cropPercentOf(crop, photo.pixelWidth, photo.pixelHeight);
-  const dpi = effectiveDpi(crop, spec.printW);
+  const ppi = effectivePpi(crop, spec.printW);
   const fitScore =
-    0.5 * (1 - cropPct / 100) + 0.3 * dpiScore(dpi) + 0.2 * matScore(spec);
+    0.5 * (1 - cropPct / 100) + 0.3 * ppiScore(ppi) + 0.2 * matScore(spec);
   return {
     framePresetId: spec.preset.id,
-    effectiveDpi: dpi,
+    effectivePpi: ppi,
     cropPercent: cropPct,
     cropWindow: crop,
     fitScore,
-    qualityLabel: qualityLabel(dpi),
-    explanation: explanationFor(spec, cropPct, dpi),
+    qualityLabel: qualityLabel(ppi),
+    explanation: explanationFor(spec, cropPct, ppi),
   };
 }
 
 /**
  * One primary + two alternatives.
- * Primary: best weighted score that is not "Low" DPI (hard rule).
+ * Primary: best weighted score that is not "Low" PPI (hard rule).
  * Alternatives favor diversity: the least-cropping option and the largest
  * frame (visual impact), falling back to next-best score.
  */
@@ -222,7 +222,7 @@ export function buildPrintOrder(
     paperWidthIn: spec.frameW,
     paperHeightIn: spec.frameH,
     orientation: spec.orientation,
-    dpiAtPrintSize: effectiveDpi(crop, spec.printW),
+    ppiAtPrintSize: effectivePpi(crop, spec.printW),
     cropWindow: crop,
     matColor,
     visibleWidthIn: spec.openW - MAT_OVERLAP_IN,
@@ -249,7 +249,7 @@ export function printOrderText(order: PrintOrder, photo: Photo): string {
     `PRINT`,
     `  Image size:     ${fmtIn(order.printWidthIn)} × ${fmtIn(order.printHeightIn)} in (${cmText(order.printWidthIn)} × ${cmText(order.printHeightIn)} cm), ${order.orientation}`,
     `  Paper size:     ${fmtIn(order.paperWidthIn)} × ${fmtIn(order.paperHeightIn)} in, image centered, margins white`,
-    `  Resolution:     ${order.dpiAtPrintSize} DPI at print size (${cropW} × ${cropH} px source area)`,
+    `  Resolution:     ${order.ppiAtPrintSize} PPI at print size (${cropW} × ${cropH} px source area)`,
     ``,
     `CROP`,
     `  Source file:    ${srcW} × ${srcH} px`,
@@ -263,8 +263,10 @@ export function printOrderText(order: PrintOrder, photo: Photo): string {
     `  Visible area:   ${fmtIn(order.visibleWidthIn)} × ${fmtIn(order.visibleHeightIn)} in after mat overlap`,
   ];
   if (bleedPerSide > 0.001) {
+    const mm = (Math.round(bleedPerSide * 25.4 * 10) / 10).toFixed(1);
+    const bleedIn = Math.round(bleedPerSide * 1000) / 1000; // 1/8 in must print as 0.125, not 0.13
     lines.push(
-      `  Print bleed:    print is ${fmtIn(bleedPerSide)} in larger than the mat opening on each side`,
+      `  Print bleed:    print is ${bleedIn} in (${mm} mm) larger than the mat opening on each side`,
     );
   }
   return lines.join("\n");

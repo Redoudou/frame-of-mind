@@ -33,8 +33,9 @@ const DEFAULT_MANUAL: FramePreset = {
   frameHeight: 20,
   matOpeningWidth: 11,
   matOpeningHeight: 14,
-  printWidth: 11,
-  printHeight: 14,
+  // Print ships with the standard 1/8 in bleed per side behind the mat.
+  printWidth: 11.25,
+  printHeight: 14.25,
   unit: "in",
 };
 
@@ -261,7 +262,7 @@ export default function App() {
               <li>
                 <strong>Compare frames</strong>
                 Get a recommended frame + mat combination and two alternatives, scored on cropping,
-                print sharpness (DPI) and mat balance — or enter the size of a frame you already own.
+                print sharpness (PPI) and mat balance — or enter the size of a frame you already own.
               </li>
               <li>
                 <strong>Position the photo</strong>
@@ -269,7 +270,7 @@ export default function App() {
               </li>
               <li>
                 <strong>Hand off the print order</strong>
-                Copy or print a pixel-exact instruction sheet — print size, paper size, DPI and the
+                Copy or print a pixel-exact instruction sheet — print size, paper size, PPI and the
                 precise crop window — that any print shop can follow without guessing.
               </li>
             </ol>

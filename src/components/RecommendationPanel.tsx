@@ -37,8 +37,8 @@ export function RecommendationPanel({
           >
             <div className="rec-card-top">
               <span className={`rec-rank ${i === 0 ? "primary" : ""}`}>{RANK_LABELS[i]}</span>
-              <span className={`dpi-chip dpi-${rec.qualityLabel}`}>
-                {rec.effectiveDpi} DPI · {QUALITY_TEXT[rec.qualityLabel]}
+              <span className={`ppi-chip ppi-${rec.qualityLabel}`}>
+                {rec.effectivePpi} PPI · {QUALITY_TEXT[rec.qualityLabel]}
               </span>
             </div>
             <div className="rec-title">
@@ -50,7 +50,7 @@ export function RecommendationPanel({
             </div>
             <div className="rec-explanation">{rec.explanation}</div>
             {rec.qualityLabel === "low" && (
-              <div className="rec-warning">⚠ Below 180 DPI — the print may look soft at this size.</div>
+              <div className="rec-warning">⚠ Below 180 PPI — the print may look soft at this size.</div>
             )}
           </button>
         );
